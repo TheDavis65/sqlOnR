@@ -23,30 +23,32 @@ library(feather)
 library(RODBC)
 library(DBI)
 library(odbc)
-conn1 <- odbcConnect("SQLServer_DSN")
-sqlQuery(conn1, "SELECT * FROM MyTable")
+db_conn1 <- odbcConnect("SQLServer_DSN")
+sqlQuery(db_conn1, "SELECT * FROM MyTable")
 
+odbcClose(db_conn1)
 
 ## 2 way to do it
 library(RODBC)
 library(DBI)
 library(odbc)
-conn2 <- dbConnect(odbc :: odbc(), "SQLServer_DSN")
+db_conn2 <- dbConnect(odbc :: odbc(), "SQLServer_DSN")
 
+odbcClose(db_conn2)
 
 ## 3 way to do it
 library(RODBC)
 library(DBI)
 library(odbc)
-conn3 <- DBI::dbConnect(odbc :: odbc(),
+db_conn3 <- DBI::dbConnect(odbc :: odbc(),
                      Driver = 'SQL Server Native Client 11.0',
                      Server = 'localhost',
                      Database = "MyDatabase",
                      trusted_connection = 'yes',
                      port = 1433)
 
-summary(conn3)
-
+summary(db_conn3)
+odbcClose(db_conn3)
 
 
 # CLEAN UP #################################################
